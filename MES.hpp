@@ -26,11 +26,11 @@ public:
 	Solve good_solve()
 	{
 		Solve result;
-		double d = this->b * this->b - 4 * this->a * this->c;
+		double d = b * b - 4 * a * c;
 		if (d == 0)
 		{
 			result.count_of_x = 1;
-			result.x1 = -this->b / (2 * this->a);
+			result.x1 = -b / (2 * a);
 			return result;
 		}
 		if (d < 0)
@@ -41,15 +41,15 @@ public:
 		if (d > 0)
 		{
 			result.count_of_x = 2;
-			result.x1 = (-this->b + sqrt(d)) / (2 * this->a);
-			result.x2 = (-this->b - sqrt(d)) / (2 * this->a);
+			result.x1 = (b + sqrt(d)) / (2 * a);
+			result.x2 = (b - sqrt(d)) / (2 * a);
 			return result;
 		}
 	}
 
 	bool check_solve(const Solve solve)
 	{
-		Solve good = this->good_solve();
+		Solve good = good_solve();
 		if (solve.count_of_x != good.count_of_x)
 			return false;
 		else
@@ -61,21 +61,14 @@ public:
 				if (solve.x1 == good.x1)
 					return true;
 				else
-				{
 					return false;
-
-					//std::cout << solve.x1 << " " << good.x1 << this->number << std::endl;
-				}
 			}
 			if (good.count_of_x == 2)
 			{
 				if (solve.x1 == good.x1 && solve.x2 == good.x2)
 					return true;
 				else
-				{
-					//std::cout << solve.x1 << " " << good.x1 << std::endl<<solve.x2 << " " << good.x2 << this->number << std::endl;
 					return false;
-				}
 			}
 		}
 	}
@@ -154,7 +147,6 @@ class Student
 
 	Solve bad_solve()
 	{
-		//srand(time(NULL));
 		Solve result;
 		result.count_of_x = rand() % 3;
 		if (result.count_of_x == 0)
@@ -174,7 +166,6 @@ class Student
 
 	Solve students_solve(Quadratic_Equation qe)
 	{
-		//srand(time(NULL));
 		Solve result;
 		if (this->type == Type::GOOD)
 		{
@@ -208,7 +199,6 @@ public:
 
 	Student(const char* name)
 	{
-		//srand(time(NULL));
 		this->type = (Type)(rand() % 3);
 		this->name = name;
 	}
