@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a77ffbff-6d77-48e8-9172-4dd777d33ca2}</ProjectGuid>
-    <RootNamespace>MES</RootNamespace>
+    <ProjectGuid>{fcb9f586-bdfc-4c24-86b4-0335e8e45abe}</ProjectGuid>
+    <RootNamespace>TQE</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,10 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MES.cpp" />
+    <ClCompile Include="TQE.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MES.hpp" />
+    <ClInclude Include="TQE.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
