@@ -13,16 +13,27 @@ void make_eqs(const char* filename)
 	}
 	file.close();
 }
-void make_students(std::vector<Student>& students, const char** NAMES, const int count_of_students)
+std::vector<std::unique_ptr<Student>> GenerateStudents(const size_t count) noexcept 
 {
-	for (int i = 0; i < count_of_students; i++)
+	std::vector<std::unique_ptr<Student>> res;
+	for (int i = 0; i < count; i++)
 	{
-		Student student = Student(NAMES[i]);
-		students.insert(students.end(), student);
+		switch (rand() % 3) {
+		case 0:
+			res.push_back(std::make_unique<Bad_Student>(NAMES[i]));
+			break;
+		case 1:
+			res.push_back(std::make_unique<Middle_Student>(NAMES[i]));
+			break;
+		case 2:
+			res.push_back(std::make_unique<Good_Student>(NAMES[i]));
+			break;
+		}
 	}
+	return res;
 }
 
-void students_doing_eqs_from_file(const char* filename, std::vector<Student> students, Teacher& teacher)
+void students_doing_eqs_from_file(const char* filename, std::vector<std::unique_ptr<Student>>& students, Teacher& teacher)
 {
 	std::ifstream file(filename);
 	for (int i = 0; i < count_of_eqs; ++i)
@@ -32,7 +43,7 @@ void students_doing_eqs_from_file(const char* filename, std::vector<Student> stu
 		Solve solve;
 		for (int i = 0; i < count_of_students; ++i)
 		{
-			students.at(i).send_to_teacher(eq, teacher);
+			students.at(i)->send_to_teacher(eq, teacher);
 		}
 	}
 	file.close();
@@ -43,9 +54,7 @@ int main()
 {
 	srand(time(0));
 
-	std::vector<Student> students;
-	
-	make_students(students, NAMES, count_of_students);
+	std::vector<std::unique_ptr<Student>> students = GenerateStudents(8);
 	
 	make_eqs("eqs.txt");
 	

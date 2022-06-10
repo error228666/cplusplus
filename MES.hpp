@@ -47,6 +47,25 @@ public:
 		}
 	}
 
+	Solve bad_solve()
+	{
+		Solve result;
+		result.count_of_x = rand() % 3;
+		if (result.count_of_x == 0)
+			return result;
+		if (result.count_of_x == 1)
+		{
+			result.x1 = rand() % 100;
+			return result;
+		}
+		if (result.count_of_x == 2)
+		{
+			result.x2 = rand() % 100;
+			result.x1 = rand() % 100;
+			return result;
+		}
+	}
+
 	bool check_solve(const Solve solve)
 	{
 		Solve good = good_solve();
@@ -137,61 +156,9 @@ public:
 class Student 
 {
 
-	enum class Type
+	virtual Solve students_solve(Quadratic_Equation eq)
 	{
-		GOOD,
-		MIDDLE,
-		BAD
-	};
-	Type type;
-
-	Solve bad_solve()
-	{
-		Solve result;
-		result.count_of_x = rand() % 3;
-		if (result.count_of_x == 0)
-			return result;
-		if (result.count_of_x == 1)
-		{
-			result.x1 = rand() % 100;
-			return result;
-		}
-		if (result.count_of_x == 2)
-		{
-			result.x2 = rand() % 100;
-			result.x1 = rand() % 100;
-			return result;
-		}
-	}
-
-	Solve students_solve(Quadratic_Equation qe)
-	{
-		Solve result;
-		if (this->type == Type::GOOD)
-		{
-			result = qe.good_solve();
-			return result;
-		}
-		if (this->type == Type::MIDDLE)
-		{
-			bool chance = (bool)(rand() % 2);
-			if (chance)
-			{
-				result = qe.good_solve();
-				return result;
-			}
-			else
-			{
-				result = this->bad_solve();
-				return result;
-			}
-		}
-		if (this->type == Type::BAD)
-		{
-			result.count_of_x = 1;
-			result.x1 = 0;
-			return result;
-		}
+		return eq.good_solve();
 	}
 
 public:
@@ -199,7 +166,6 @@ public:
 
 	Student(const char* name)
 	{
-		this->type = (Type)(rand() % 3);
 		this->name = name;
 	}
 	
@@ -211,3 +177,40 @@ public:
 	}
 };
 
+class Good_Student : public Student
+{
+	
+	Solve students_solve(Quadratic_Equation eq)
+	{
+		return eq.good_solve();
+	}
+public:
+	Good_Student(const char* name) : Student(name) {}
+};
+
+
+class Middle_Student : public Student
+{
+
+	Solve students_solve(Quadratic_Equation eq)
+	{
+		return eq.bad_solve();
+	}
+public:
+	Middle_Student(const char* name) : Student(name) {}
+};
+
+
+class Bad_Student : public Student
+{
+
+	Solve students_solve(Quadratic_Equation eq)
+	{
+		Solve result;
+		result.count_of_x = 1;
+		result.x1 = 0;
+		return result;
+	}
+public:
+	Bad_Student(const char* name) : Student(name) {}
+};
